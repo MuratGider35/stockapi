@@ -21,9 +21,9 @@ module.exports = {
                 </ul>
             `
         */
+        const filter = (req.user?.is_superadmin) ? {} : {_id: req.user._id}
 
-
-        const data = await res.getModelList(User)
+        const data = await res.getModelList(User, filter)
 
         // res.status(200).send({
         //     error: false,
