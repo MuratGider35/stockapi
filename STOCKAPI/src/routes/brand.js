@@ -4,21 +4,21 @@
 ------------------------------------------------------- */
 const router = require('express').Router()
 /* ------------------------------------------------------- */
-// routes/token:
+// routes/brand:
 
-const token = require('../controllers/token')
+const brand = require('../controllers/brand')
 
-// URL: /tokens
+// URL: /brands
 
 router.route('/')
-    .get(token.list)
-    .post(token.create)
+    .get(brand.list)
+    .post(brand.create)
 
 router.route('/:id')
-    .get(token.read)
-    .put(token.update)
-    .patch(token.update)
-    .delete(token.delete)
+    .get(brand.read)
+    .put(brand.update)
+    .patch(brand.update)
+    .delete(brand.delete)
 
 /* ------------------------------------------------------- */
 module.exports = router
