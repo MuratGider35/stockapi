@@ -53,8 +53,8 @@ module.exports = {
         */
 
         // Disallow setting admin/staff:
-        req.body.is_staff = false
-        req.body.is_superadmin = false
+     
+        req.body.user_id = req.user?._id
 
         const data = await Sale.create(req.body)
 
