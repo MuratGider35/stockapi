@@ -22,7 +22,6 @@ module.exports = {
             `
         */
 
-
         const data = await res.getModelList(Brand)
 
         // res.status(200).send({
@@ -42,19 +41,9 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Brandname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Brand' }
             }
         */
-
-        // Disallow setting admin/staff:
-        req.body.is_staff = false
-        req.body.is_superadmin = false
 
         const data = await Brand.create(req.body)
 
@@ -69,7 +58,6 @@ module.exports = {
             #swagger.tags = ["Brands"]
             #swagger.summary = "Get Single Brand"
         */
-        
 
         const data = await Brand.findOne({ _id: req.params.id })
 
@@ -86,17 +74,10 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Brandname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Brand' }
             }
         */
 
-        
         const data = await Brand.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
@@ -112,7 +93,6 @@ module.exports = {
             #swagger.summary = "Delete Brand"
         */
 
-        
         const data = await Brand.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({

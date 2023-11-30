@@ -22,7 +22,6 @@ module.exports = {
             `
         */
 
-
         const data = await res.getModelList(Sale, {}, ['brand_id', 'product_id'])
 
         // res.status(200).send({
@@ -42,18 +41,11 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Salename": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Sale' }
             }
         */
 
-        // Disallow setting admin/staff:
-     
+        // Auto add user_id to req.body:
         req.body.user_id = req.user?._id
 
         const data = await Sale.create(req.body)
@@ -69,7 +61,6 @@ module.exports = {
             #swagger.tags = ["Sales"]
             #swagger.summary = "Get Single Sale"
         */
-        
 
         const data = await Sale.findOne({ _id: req.params.id }).populate(['brand_id', 'product_id'])
 
@@ -86,17 +77,10 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Salename": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Sale' }
             }
         */
 
-        
         const data = await Sale.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
@@ -112,7 +96,6 @@ module.exports = {
             #swagger.summary = "Delete Sale"
         */
 
-        
         const data = await Sale.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({

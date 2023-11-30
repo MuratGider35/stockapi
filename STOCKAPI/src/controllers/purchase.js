@@ -22,7 +22,6 @@ module.exports = {
             `
         */
 
-        // const data = await res.getModelList(Purchase)
         const data = await res.getModelList(Purchase, {}, ['firm_id', 'brand_id', 'product_id'])
 
         // res.status(200).send({
@@ -42,18 +41,11 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Purchasename": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Purchase' }
             }
         */
 
-        // Disallow setting admin/staff:
-   
+        // Auto add user_id to req.body:
         req.body.user_id = req.user?._id
 
         const data = await Purchase.create(req.body)
@@ -69,8 +61,7 @@ module.exports = {
             #swagger.tags = ["Purchases"]
             #swagger.summary = "Get Single Purchase"
         */
-        
-        // const data = await Purchase.findOne({ _id: req.params.id })
+
         const data = await Purchase.findOne({ _id: req.params.id }).populate(['firm_id', 'brand_id', 'product_id'])
 
         res.status(200).send({
@@ -86,17 +77,10 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Purchasename": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Purchase' }
             }
         */
 
-        
         const data = await Purchase.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
@@ -112,7 +96,6 @@ module.exports = {
             #swagger.summary = "Delete Purchase"
         */
 
-        
         const data = await Purchase.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({

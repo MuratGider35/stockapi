@@ -11,7 +11,7 @@ module.exports = {
     list: async (req, res) => {
         /*
             #swagger.tags = ["Categories"]
-            #swagger.summary = "List Categorys"
+            #swagger.summary = "List Categories"
             #swagger.description = `
                 You can send query with endpoint for search[], sort[], page and limit.
                 <ul> Examples:
@@ -21,7 +21,6 @@ module.exports = {
                 </ul>
             `
         */
-
 
         const data = await res.getModelList(Category)
 
@@ -37,24 +36,14 @@ module.exports = {
 
     create: async (req, res) => {
         /*
-            #swagger.tags = ["Categorys"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "Create Category"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Categoryname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Category' }
             }
         */
-
-        // Disallow setting admin/staff:
-        req.body.is_staff = false
-        req.body.is_superadmin = false
 
         const data = await Category.create(req.body)
 
@@ -66,10 +55,9 @@ module.exports = {
 
     read: async (req, res) => {
         /*
-            #swagger.tags = ["Categorys"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "Get Single Category"
         */
-        
 
         const data = await Category.findOne({ _id: req.params.id })
 
@@ -81,22 +69,15 @@ module.exports = {
 
     update: async (req, res) => {
         /*
-            #swagger.tags = ["Categorys"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "Update Category"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Categoryname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Category' }
             }
         */
 
-        
         const data = await Category.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
@@ -108,11 +89,10 @@ module.exports = {
 
     delete: async (req, res) => {
         /*
-            #swagger.tags = ["Categorys"]
+            #swagger.tags = ["Categories"]
             #swagger.summary = "Delete Category"
         */
 
-        
         const data = await Category.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({

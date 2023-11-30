@@ -22,7 +22,6 @@ module.exports = {
             `
         */
 
-
         const data = await res.getModelList(Firm)
 
         // res.status(200).send({
@@ -42,19 +41,9 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Firmname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Firm' }
             }
         */
-
-        // Disallow setting admin/staff:
-        req.body.is_staff = false
-        req.body.is_superadmin = false
 
         const data = await Firm.create(req.body)
 
@@ -69,7 +58,6 @@ module.exports = {
             #swagger.tags = ["Firms"]
             #swagger.summary = "Get Single Firm"
         */
-        
 
         const data = await Firm.findOne({ _id: req.params.id })
 
@@ -86,17 +74,10 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Firmname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Firm' }
             }
         */
 
-        
         const data = await Firm.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
@@ -112,7 +93,6 @@ module.exports = {
             #swagger.summary = "Delete Firm"
         */
 
-        
         const data = await Firm.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({
