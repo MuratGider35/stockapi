@@ -4,16 +4,24 @@
 ------------------------------------------------------- */
 const router = require('express').Router()
 /* ------------------------------------------------------- */
-// routes/auth:
+// routes/token:
 
-const auth = require('../controllers/auth')
+const { isAdmin } = require('../middlewares/permissions')
+const token = require('../controllers/token')
 
-// URL: /auth
+// URL: /tokens
 
-router.post('/login', auth.login) // SimpleToken & JWT
-router.post('/refresh', auth.refresh) // JWT Refresh
-router.get('/logout', auth.logout) // SimpleToken Logout
-router.post('/logout', auth.logout) // SimpleToken Logout
+router.use(isAdmin)
+
+router.route('/')
+    .get(token.list)
+    .post(token.create)
+
+router.route('/:id')
+    .get(token.read)
+    .put(token.update)
+    .patch(token.update)
+    .delete(token.delete)
 
 /* ------------------------------------------------------- */
 module.exports = router
